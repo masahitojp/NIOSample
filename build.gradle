@@ -1,0 +1,34 @@
+def lang = ['java', 'groovy']
+lang.each {ln ->
+    apply plugin: ln
+}
+apply plugin: 'idea'
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'com.google.guava:guava:14.0.1'
+    compile 'ch.qos.logback:logback-classic:1.0.13'
+    groovy 'org.codehaus.groovy:groovy:2.1.6'
+    testCompile 'junit:junit:4.11'
+}
+
+task structure(depends : idea) << {
+    def dirs = []
+    dirs << 'src'
+    sourceSets.all { src ->
+        dirs << "src/${src.name}"
+        lang.each { ln ->
+            dirs << "src/${src.name}/${ln}"
+        }
+    }
+    dirs.each {
+        def dir = new File(it)
+        if(dir.exists() == false) dir.mkdir()
+    }
+}
