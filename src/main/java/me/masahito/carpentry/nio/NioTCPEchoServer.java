@@ -1,4 +1,4 @@
-package me.masahito.carpentry;
+package me.masahito.carpentry.nio;
 
 import com.google.common.util.concurrent.AbstractExecutionThreadService;
 
